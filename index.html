@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    body{
+      background-color: grey;
+      cursor: url(./spray123.png) 10 10, auto;
+      overflow: hidden;
+      -webkit-user-select:none;
+            -moz-user-select:none;
+            -o-user-select:none;
+            user-select:none;
+        }
+
+    #box{
+      border: black solid -5px;
+    }
+
+    #game img:hover {
+      cursor: url(./spray2.png) 10 10, auto;
+    }
+
+    #content{
+      width: 1000px;
+      height: 600px;
+      position: relative;
+      /* top: -5%;
+      left: 30%;
+      transform: translate(-30%,5%); */
+      border: 20px solid black;
+      /* float: right;
+      margin-right: 200px; */
+      margin: auto;
+    }
+    #game {
+      width: 1000px;
+      height: 600px;
+      background-image: url(./newbg1015.jpg);
+      background-repeat: no-repeat;
+      background-position: center;
+      overflow: hidden;
+      position: absolute;
+      z-index: 1;
+    }
+    #game img {
+      position: absolute;
+      height: 150px;
+    }
+
+    #gifpic img{
+      width: 1000px;
+      height: 600px;
+      margin: auto;
+      position: absolute;
+      z-index: 2;
+    }
+    #buttons{
+      height: 500px;
+      width: 310px;
+      float: left;
+      top: 90%;
+      left: -20%;
+      transform: translate(20%,-90%);
+    }
+    #btn-start{
+      height: 100px;
+      width: 300px;
+      border-radius: 30%;
+      background-image: url(./gosavesimpson.png);
+      background-repeat: no-repeat;
+      background-size:300px 100px ;
+      background-color: rgba(0,0,0,0.01);
+      border: rgba(0,0,0,0.001) 1px solid; 
+      margin: auto;
+    }
+
+    #scorepic{
+      height: 100px;
+      width: 300px;
+      border-radius: 30%;
+      background-image: url(./SCORE.png);
+      background-repeat: no-repeat;
+      background-size:300px 100px ;
+      background-color: rgba(0,0,0,0.01);
+      border: rgba(0,0,0,0.001) 1px solid; 
+      font-size:3rem;
+      font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+      color: red;
+      line-height: 100px;
+      margin: auto;
+      text-align: right;
+    }
+    #counterpic{
+      height: 100px;
+      width: 300px;
+      border-radius: 30%;
+      background-image: url(./counter.gif);
+      background-repeat: no-repeat;
+      background-size:300px 100px ;
+      background-color: rgba(0,0,0,0.01);
+      border: rgba(0,0,0,0.001) 1px solid; 
+      font-size:3rem;
+      font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+      color: red;
+      line-height: 100px;
+      margin: auto;
+      text-align: right;
+    }
+
+    #win{
+      width: 1000px;
+      height: 600px;
+      background-image: url(./win.jpg);
+      background-size: cover;
+      background-repeat: no-repeat;
+    }
+
+    /* #video{
+    position: absolute;
+    top: 0;
+    left: 0;
+    } */
+    #again{
+      position: relative;
+      left: -7%;
+    }
+
+    .restart{
+      background-color: lightgray;
+      font-family:'微軟正黑體';
+      font-weight: bolder;
+      font-size:40px;
+      border: solid 5px darkgrey;
+      padding: 2px;
+      margin: 2px;
+    }
+    .restart a{
+      text-decoration: none;
+      color:black;
+    }
+  </style>
+</head>
+<body>
+ <br>
+ <br>
+ <br>
+<div id="content">
+  <div id="box">
+  <div id="game">
+  </div>
+  <div id="gifpic">
+    <img id="begining" src="./simpsonsbegining.gif">
+  </div></div>
+  </div>
+  <div>
+  <div id="buttons">
+    <input type="button" value="" id="btn-start" >
+    <br>
+    <br>
+    <p id="scorepic"><span id="text-score">0</span>&emsp;</p>
+    <br>
+    <p id="counterpic"><span id="text-time">30</span> &emsp;s&emsp;</p>
+  </div>
+</div>
+<div id="again"></div>
+  <script src="./jquery-3.5.1.min.js"></script>
+  <script>
+
+
+    let score = 0
+    let timeleft = 30
+
+    // 殭屍流水號
+    let id = 0
+
+    const rand = (num) => {
+      return Math.floor(Math.random()*num)
+    }
+
+    const movezombie = (id) => {
+      $(`#zombie${id}`).animate({
+        left: rand(70) + "%",
+        top: rand(70) + "%"
+      }, 3000, function(){
+        movezombie(id)
+      })
+    }
+
+    $('#btn-start').click(function(){
+      // 停用開始按鈕
+      $(this).attr('disabled', true)
+
+      // 重設
+      score = 0
+      $('#text-score').text(score)
+      timeleft = 30
+      $('#text-time').text(timeleft)
+
+      $("#game").append(`<audio id="audio" src="./war2.mp3" autoplay  ></audio>`);
+
+      let timer = setInterval(function(){
+        // 修改秒數
+        timeleft--
+        $('#text-time').text(timeleft)
+
+        if(timeleft === 0) {
+          clearInterval(timer)
+          $('#btn-start').attr('disabled', false)
+          $('#game img').remove()
+          $("#again").append(`<p align="center"><button class="restart"><a href="javascript:window.location.reload()">PLAY AGAIN</a></button></p>`)
+
+          // setTimeout(() => {
+          //   alert('時間到')
+          // }, 50)
+          
+          $('#game').append(`<img style="height:600px;weight:1000px;object-fit: fill;" src="./sick.gif" ></img>`)
+          $('#game').append(`<audio src="./lose.mp3" autoplay  ></audio>`);
+        } else {
+          // 每秒隨機出現殭屍
+          if(rand(10) > 5) {
+            $('#game').append(`<img src="./tenor.gif" id="zombie${id}">`)
+            $(`#zombie${id}`).css({
+              left: rand(70) + "%",
+              top: rand(70) + "%"
+            })
+            movezombie(id)
+            id++
+          }
+        }
+
+        if(score === 10) {
+          clearInterval(timer)
+          $('#btn-start').attr('disabled', false)
+          $('#game img').remove()
+          setTimeout(() => {
+            // alert('恭喜過關')
+            $('#game').append(`<div id="win"></div>`)
+            $("#game").append(`<audio src="./rudolph.mp3" autoplay  ></audio>`);
+            document.getElementById("audio").pause();
+          $("#again").append(`<p align="center"><button class="restart"><a href="javascript:window.location.reload()">PLAY AGAIN</a></button></p>`)
+          }, 50)
+        } 
+      }, 1000)
+    })
+
+    $("#game").on('click', 'img', function(){
+      $(this).attr('src', './deadvirus.png') 
+      $(this).stop(true, false)
+      $(this).css('pointer-events', 'none')
+      $(this).append(`<audio src="./spray2.mp3" autoplay  ></audio>`);
+      score++
+      $('#text-score').text(score)
+    })
+
+    $(function() {
+    $("#gifpic").show().delay(25000).hide(0);
+   
+}); 
+
+$('#btn-start').click(function(){
+  $("#begining").hide(0);
+})
+  </script>
+</body>
+</html>
