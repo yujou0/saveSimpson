@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="./css/bootstrap.css">
   <title>Document</title>
   <style>
     body{
-      background-color: grey;
       cursor: url(./spray123.png) 10 10, auto;
-      overflow: hidden;
       -webkit-user-select:none;
             -moz-user-select:none;
             -o-user-select:none;
@@ -24,20 +24,12 @@
     }
 
     #content{
-      width: 1000px;
       height: 600px;
       position: relative;
-      /* top: -5%;
-      left: 30%;
-      transform: translate(-30%,5%); */
       border: 20px solid black;
-      /* float: right;
-      margin-right: 200px; */
       margin: auto;
     }
     #game {
-      width: 1000px;
-      height: 600px;
       background-image: url(./newbg1015.jpg);
       background-repeat: no-repeat;
       background-position: center;
@@ -51,19 +43,11 @@
     }
 
     #gifpic img{
-      width: 1000px;
-      height: 600px;
+      width: 100%;
+      height: 100%;
       margin: auto;
       position: absolute;
       z-index: 2;
-    }
-    #buttons{
-      height: 500px;
-      width: 310px;
-      float: left;
-      top: 90%;
-      left: -20%;
-      transform: translate(20%,-90%);
     }
     #btn-start{
       height: 100px;
@@ -111,29 +95,24 @@
     }
 
     #win{
-      width: 1000px;
-      height: 600px;
+      width: 100%;
+      height: 100%;
       background-image: url(./win.jpg);
       background-size: cover;
       background-repeat: no-repeat;
     }
 
-    /* #video{
-    position: absolute;
-    top: 0;
-    left: 0;
-    } */
     #again{
       position: relative;
-      left: -7%;
+      top: 50%;
     }
 
     .restart{
       background-color: lightgray;
       font-family:'微軟正黑體';
       font-weight: bolder;
-      font-size:40px;
-      border: solid 5px darkgrey;
+      font-size:1re,;
+      border: solid 3px darkgrey;
       padding: 2px;
       margin: 2px;
     }
@@ -141,31 +120,34 @@
       text-decoration: none;
       color:black;
     }
+    .w-65{
+      width: 65%;
+    }
   </style>
 </head>
-<body>
+<body class="bg-dark">
  <br>
  <br>
  <br>
-<div id="content">
+ <div class="d-lg-flex ">
+ <div id="buttons" class="d-flex w-25 flex-column">
+  <input type="button" value="" id="btn-start" >
+  <p id="scorepic"><span id="text-score">0</span>&emsp;</p>
+  <p id="counterpic"><span id="text-time">30</span> &emsp;s&emsp;</p>
+</div>
+<div id="content" class="w-65">
   <div id="box">
-  <div id="game">
+  <div id="game" class="w-100 h-100">
   </div>
   <div id="gifpic">
     <img id="begining" src="./simpsonsbegining.gif">
   </div></div>
   </div>
   <div>
-  <div id="buttons">
-    <input type="button" value="" id="btn-start" >
-    <br>
-    <br>
-    <p id="scorepic"><span id="text-score">0</span>&emsp;</p>
-    <br>
-    <p id="counterpic"><span id="text-time">30</span> &emsp;s&emsp;</p>
   </div>
+  <div id="again" ></div>
 </div>
-<div id="again"></div>
+
   <script src="./jquery-3.5.1.min.js"></script>
   <script>
 
@@ -216,7 +198,7 @@
           //   alert('時間到')
           // }, 50)
           
-          $('#game').append(`<img style="height:600px;weight:1000px;object-fit: fill;" src="./sick.gif" ></img>`)
+          $('#game').append(`<img style="height:105%;weight:100%;object-fit: fill;" src="./sick.gif" ></img>`)
           $('#game').append(`<audio src="./lose.mp3" autoplay  ></audio>`);
         } else {
           // 每秒隨機出現殭屍
